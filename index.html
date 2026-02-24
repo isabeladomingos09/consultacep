@@ -3,49 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consulta CEP - ViaCEP</title>
+    <title>Consulta CEP Moderno</title>
+    
+    <!-- Linkando a nova fonte arredondada (Nunito) do Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Linkando o nosso arquivo CSS separado -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <div class="container">
-        <h1>Consulta CEP - ViaCEP</h1>
-        <input type="text" id="cep" placeholder="Digite o CEP (8 dígitos)">
-        <button onclick="buscarCEP()">Buscar</button>
+        <div class="icon-header">📍</div>
+        <h1>Buscar Endereço</h1>
+        <p class="subtitle">Encontre qualquer local pelo CEP</p>
+
+        <div class="input-group">
+            <input type="text" id="cep" placeholder="Digite o CEP (apenas números)" maxlength="9">
+            <button onclick="buscarCEP()">Buscar</button>
+        </div>
+
         <div id="resultado"></div>
     </div>
 
+    <!-- Script do ViaCEP -->
     <script>
     function buscarCEP() {
-    const cep = document.getElementById('cep').value;
-    const resultadoDiv = document.getElementById('resultado');
+        let cep = document.getElementById('cep').value;
+        const resultadoDiv = document.getElementById('resultado');
 
-    // Construir a URL da API ViaCEP
-    const url = `https://viacep.com.br/ws/${cep}/json/`;
+        // Limpa formatação (remove traços)
+        cep = cep.replace(/\D/g, '');
 
-    // Fazer a requisição usando fetch
-    fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Erro na requisição: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.erro) {
-                resultadoDiv.innerHTML = '<p style="color: red;">CEP não encontrado.</p>';
-            } else {
-                resultadoDiv.innerHTML = `
-                    <p><strong>CEP:</strong> ${data.cep}</p>
-                    <p><strong>Logradouro:</strong> ${data.logradouro}</p>
-                    <p><strong>Bairro:</strong> ${data.bairro}</p>
-                    <p><strong>Cidade:</strong> ${data.localidade}</p>
-                    <p><strong>Estado:</strong> ${data.uf}</p>
-                `;
-            }
-        })
-        .catch(error => {
-            resultadoDiv.innerHTML = `<p style="color: red;">Erro ao buscar CEP: ${error.message}</p>`;
-        });
-}
+        if (cep.length !== 8) {
+            resultadoDiv.innerHTML = '<div class="msg-erro">⚠️ Por favor, digite um CEP válido com 8 números.</div>';
+            return;
+        }
+
+        resultadoDiv.innerHTML = '<div class="msg-loading">⏳ Buscando endereço...</div>';
+
+        const url = `https://viacep.com.br/ws/${cep}/json/`;
+
+        fetch(url)
+            .then(response => {
+                if (!response.ok) throw new Error("Erro na rede");
+                return response.json();
+            })
+            .then(data => {
+                if (data.erro) {
+                    resultadoDiv.innerHTML = '<div class="msg-erro">❌ CEP não encontrado.</div>';
+                } else {
+                    resultadoDiv.innerHTML = `
+                        <div class="resultado-box anime-fade">
+                            <div class="info-linha">
+                                <span class="label">CEP</span>
+                                <span class="dado">${data.cep}</span>
+                            </div>
+                            <div class="info-linha">
+                                <span class="label">Logradouro</span>
+                                <span class="dado">${data.logradouro || '-'}</span>
+                            </div>
+                            <div class="info-linha">
+                                <span class="label">Bairro</span>
+                                <span class="dado">${data.bairro || '-'}</span>
+                            </div>
+                            <div class="info-linha">
+                                <span class="label">Cidade/UF</span>
+                                <span class="dado">${data.localidade} - ${data.uf}</span>
+                            </div>
+                        </div>
+                    `;
+                }
+            })
+            .catch(() => {
+                resultadoDiv.innerHTML = `<div class="msg-erro">❌ Erro ao conectar. Verifique sua internet.</div>`;
+            });
+    }
     </script>
+
 </body>
 </html>
