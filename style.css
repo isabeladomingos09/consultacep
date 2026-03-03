@@ -3,11 +3,9 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* Aplicando a nova fonte arredondada */
     font-family: 'Nunito', sans-serif; 
 }
 
-/* Fundo da Tela com Gradiente Claro e Suave */
 body {
     background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
     display: flex;
@@ -18,156 +16,174 @@ body {
     color: #333;
 }
 
-/* O Cartão Principal (Vidro/Card) */
+/* Container Principal */
 .container {
     background-color: #ffffff;
     width: 100%;
-    max-width: 420px;
-    padding: 40px 30px;
-    border-radius: 24px; /* Bordas mais redondas */
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); /* Sombra mais leve */
+    max-width: 450px;
+    padding: 30px;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
     text-align: center;
 }
 
-/* Ícone e Títulos */
+/* Estilo das Abas */
+.tabs {
+    display: flex;
+    background: #f1f5f9;
+    padding: 5px;
+    border-radius: 50px;
+    margin-bottom: 25px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    background: transparent;
+    font-weight: 700;
+    color: #64748b;
+    transition: 0.3s;
+}
+
+.tab-btn.active {
+    background: white;
+    color: #4facfe;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Controle de visibilidade das abas */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Elementos de Texto */
 .icon-header {
     font-size: 45px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 h1 {
     color: #1e293b;
-    font-size: 2rem;
-    font-weight: 800; /* Letra mais gordinha e chamativa */
-    letter-spacing: -0.5px;
+    font-size: 1.8rem;
+    font-weight: 800;
 }
 
 .subtitle {
     color: #64748b;
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 30px;
+    font-size: 0.95rem;
+    margin-bottom: 25px;
 }
 
-/* Área de Input e Botão */
+.aviso-api {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    margin-top: -15px;
+    margin-bottom: 15px;
+}
+
+/* Inputs e Botões */
 .input-group {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
     margin-bottom: 25px;
 }
 
 input[type="text"] {
     width: 100%;
-    padding: 16px 20px;
+    padding: 15px;
     border: 2px solid #e2e8f0;
-    border-radius: 50px; /* Borda formato pílula (bem redonda) */
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: #334155;
-    outline: none;
-    transition: all 0.3s ease;
+    border-radius: 50px;
+    font-size: 1rem;
     text-align: center;
+    outline: none;
+    transition: 0.3s;
 }
 
 input[type="text"]:focus {
     border-color: #4facfe;
-    box-shadow: 0 0 0 4px rgba(79, 172, 254, 0.2);
 }
 
 button {
     width: 100%;
-    padding: 16px;
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); /* Azul vibrante e claro */
+    padding: 15px;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     color: white;
     border: none;
-    border-radius: 50px; /* Borda formato pílula */
-    font-size: 1.15rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
     font-weight: 700;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 6px 15px rgba(0, 242, 254, 0.3);
+    transition: 0.3s;
 }
 
 button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0, 242, 254, 0.4);
+    transform: translateY(-2px);
+    filter: brightness(1.05);
 }
 
-button:active {
-    transform: translateY(1px);
-}
-
-/* Área de Resultados */
-#resultado {
-    text-align: left;
-}
-
+/* Caixas de Resultado */
 .resultado-box {
     background-color: #f8fafc;
     padding: 20px;
-    border-radius: 16px; /* Bem redondinho */
+    border-radius: 16px;
     border: 2px solid #f1f5f9;
+    text-align: left;
 }
 
 .info-linha {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 12px 0;
-    border-bottom: 1px dashed #cbd5e1; /* Linha tracejada suave */
+    padding: 10px 0;
+    border-bottom: 1px dashed #cbd5e1;
 }
 
 .info-linha:last-child {
     border-bottom: none;
-    padding-bottom: 0;
 }
 
 .label {
     font-weight: 700;
     color: #94a3b8;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     text-transform: uppercase;
 }
 
 .dado {
     font-weight: 700;
     color: #334155;
-    font-size: 1rem;
     text-align: right;
-    max-width: 65%;
+    font-size: 0.95rem;
+    max-width: 60%;
 }
 
-/* Mensagens de Erro e Loading */
+/* Mensagens de Feedback */
 .msg-erro {
-    background-color: #fef2f2;
+    background: #fef2f2;
     color: #dc2626;
     padding: 15px;
-    border-radius: 16px;
+    border-radius: 12px;
     font-weight: 700;
-    font-size: 0.95rem;
-    border: 2px solid #fecaca;
-    text-align: center;
 }
 
 .msg-loading {
     color: #64748b;
     font-weight: 700;
-    text-align: center;
 }
 
-/* Animação de entrada */
+/* Animação */
 .anime-fade {
     animation: fadeIn 0.4s ease-out forwards;
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
